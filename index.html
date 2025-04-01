@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: url('./PlanItLogin.png') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .links-container {
+            position: absolute;
+            top: 50%;
+            right: 15vw; /* Moved left from 10vw to 15vw */
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .link {
+            font-size: 2.5vw;
+            width: 15vw;
+            padding: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Amethysta', serif;
+            transition: transform 0.3s ease-in-out;
+            border-radius: 5px;
+            background: transparent !important; /* Ensures no background */
+            border: none !important; /* Removes all borders */
+            outline: none !important; /* Removes focus outlines */
+            box-shadow: none !important; /* Removes any shadow effects */
+        }
+
+        /* Different link colors */
+        .link.login {
+            color: #680791;
+        }
+
+        .link.signup {
+            color: #461057;
+        }
+
+        .link:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.1) !important; /* Subtle hover effect */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .links-container {
+                right: 10vw;
+            }
+            .link {
+                font-size: 4vw;
+                width: 30vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .links-container {
+                right: 5vw;
+            }
+            .link {
+                font-size: 5vw;
+                width: 40vw;
+            }
+        }
+    </style>   
+</head>
+<body>
+    <div class="links-container">
+        <a href="login.html" class="link login">Login</a>
+        <a href="signup.html" class="link signup">Sign Up</a>
+    </div>
+</body>
+</html>

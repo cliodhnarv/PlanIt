@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Calendar Overlay</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            position: relative;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        
+        .calendar-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .calendar-overlay {
+            position: absolute;
+            top: 19.25%;
+            left: 16.65%;
+            width: 79%;
+            height: 95%;
+        }
+        
+        table {
+            width: 74.5%;
+            height: 72%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .time-col {
+            width: 7%; /* Adjust based on your image */
+        }
+        
+        .day-col {
+            width: 8%; /* Adjust based on your image */
+        }
+        
+        .calendar-cell {
+            height: 6.4%; /* Adjust based on your time slots */
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color 0.2s;
+        }
+        
+        .calendar-cell:hover {
+            background-color: rgba(141, 131, 226, 0.6); /* Darker green on hover */
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Replace with your actual image path -->
+        <img src="SoftwareEngCal.png" alt="Calendar Image" class="calendar-image">
+        
+        <div class="calendar-overlay">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="time-col"></th>
+                        <th class="day-col"></th>
+                        <th class="day-col"></th>
+                        <th class="day-col"></th>
+                        <th class="day-col"></th>
+                        <th class="day-col"></th>
+                        <th class="day-col"></th>
+                        <th class="day-col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 9 time slots (8:00-16:00) x 7 days -->
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="08:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="08:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="08:00"></td><td class="calendar-cell" data-day="Thursday" data-time="08:00"></td><td class="calendar-cell" data-day="Friday" data-time="08:00"></td><td class="calendar-cell" data-day="Saturday" data-time="08:00"></td><td class="calendar-cell" data-day="Sunday" data-time="08:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="09:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="09:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="09:00"></td><td class="calendar-cell" data-day="Thursday" data-time="09:00"></td><td class="calendar-cell" data-day="Friday" data-time="09:00"></td><td class="calendar-cell" data-day="Saturday" data-time="09:00"></td><td class="calendar-cell" data-day="Sunday" data-time="09:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="10:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="10:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="10:00"></td><td class="calendar-cell" data-day="Thursday" data-time="10:00"></td><td class="calendar-cell" data-day="Friday" data-time="10:00"></td><td class="calendar-cell" data-day="Saturday" data-time="10:00"></td><td class="calendar-cell" data-day="Sunday" data-time="10:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="11:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="11:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="11:00"></td><td class="calendar-cell" data-day="Thursday" data-time="11:00"></td><td class="calendar-cell" data-day="Friday" data-time="11:00"></td><td class="calendar-cell" data-day="Saturday" data-time="11:00"></td><td class="calendar-cell" data-day="Sunday" data-time="11:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="12:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="12:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="12:00"></td><td class="calendar-cell" data-day="Thursday" data-time="12:00"></td><td class="calendar-cell" data-day="Friday" data-time="12:00"></td><td class="calendar-cell" data-day="Saturday" data-time="12:00"></td><td class="calendar-cell" data-day="Sunday" data-time="12:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="13:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="13:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="13:00"></td><td class="calendar-cell" data-day="Thursday" data-time="13:00"></td><td class="calendar-cell" data-day="Friday" data-time="13:00"></td><td class="calendar-cell" data-day="Saturday" data-time="13:00"></td><td class="calendar-cell" data-day="Sunday" data-time="13:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="14:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="14:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="14:00"></td><td class="calendar-cell" data-day="Thursday" data-time="14:00"></td><td class="calendar-cell" data-day="Friday" data-time="14:00"></td><td class="calendar-cell" data-day="Saturday" data-time="14:00"></td><td class="calendar-cell" data-day="Sunday" data-time="14:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="15:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="15:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="15:00"></td><td class="calendar-cell" data-day="Thursday" data-time="15:00"></td><td class="calendar-cell" data-day="Friday" data-time="15:00"></td><td class="calendar-cell" data-day="Saturday" data-time="15:00"></td><td class="calendar-cell" data-day="Sunday" data-time="15:00"></td></tr>
+                    <tr><td></td><td class="calendar-cell" data-day="Monday" data-time="16:00"></td><td class="calendar-cell" data-day="Tuesday" data-time="16:00"></td><td class="calendar-cell" data-day="Wednesday" data-time="16:00"></td><td class="calendar-cell" data-day="Thursday" data-time="16:00"></td><td class="calendar-cell" data-day="Friday" data-time="16:00"></td><td class="calendar-cell" data-day="Saturday" data-time="16:00"></td><td class="calendar-cell" data-day="Sunday" data-time="16:00"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Event Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Add Event</h2>
+            <form id="eventForm">
+                <input type="hidden" id="eventDay">
+                <input type="hidden" id="eventTime">
+                <input type="hidden" id="eventId">
+                
+                <div class="form-group">
+                    <label for="eventName">Event Name</label>
+                    <input type="text" id="eventName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDescription">Description</label>
+                    <textarea id="eventDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventTimeInput">Time</label>
+                    <input type="time" id="eventTimeInput" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDuration">Duration (minutes)</label>
+                    <select id="eventDuration">
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="90">1.5 hours</option>
+                        <option value="120">2 hours</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-danger" id="deleteBtn">Delete</button>
+                    <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Calendar data structure
+        const calendarData = {};
+        
+        // Show event modal
+        function showEventModal(day, time, event = null) {
+            const modal = document.getElementById('eventModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const deleteBtn = document.getElementById('deleteBtn');
+            
+            // Set modal title and fields
+            document.getElementById('eventDay').value = day;
+            document.getElementById('eventTime').value = time;
+            
+            if (event) {
+                // Editing existing event
+                modalTitle.textContent = 'Edit Event';
+                document.getElementById('eventId').value = event.id;
+                document.getElementById('eventName').value = event.name;
+                document.getElementById('eventDescription').value = event.description || '';
+                document.getElementById('eventTimeInput').value = event.time || time;
+                document.getElementById('eventDuration').value = event.duration || '60';
+                deleteBtn.style.display = 'block';
+            } else {
+                // Adding new event
+                modalTitle.textContent = 'Add Event';
+                document.getElementById('eventId').value = Date.now();
+                document.getElementById('eventName').value = '';
+                document.getElementById('eventDescription').value = '';
+                document.getElementById('eventTimeInput').value = time;
+                document.getElementById('eventDuration').value = '60';
+                deleteBtn.style.display = 'none';
+            }
+            
+            modal.style.display = 'flex';
+        }
+        
+        // Close event modal
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+        
+        // Save event
+        function saveEvent(e) {
+            e.preventDefault();
+            
+            const day = document.getElementById('eventDay').value;
+            const time = document.getElementById('eventTime').value;
+            const eventId = document.getElementById('eventId').value;
+            
+            const event = {
+                id: eventId,
+                name: document.getElementById('eventName').value,
+                description: document.getElementById('eventDescription').value,
+                time: document.getElementById('eventTimeInput').value,
+                duration: document.getElementById('eventDuration').value
+            };
+            
+            // Save to calendar data
+            if (!calendarData[day]) {
+                calendarData[day] = {};
+            }
+            
+            calendarData[day][time] = event;
+            
+            closeEventModal();
+        }
+        
+        // Delete event
+        function deleteEvent() {
+            const day = document.getElementById('eventDay').value;
+            const time = document.getElementById('eventTime').value;
+            
+            if (calendarData[day] && calendarData[day][time]) {
+                delete calendarData[day][time];
+                
+                // If day has no more events, remove the day
+                if (Object.keys(calendarData[day]).length === 0) {
+                    delete calendarData[day];
+                }
+                
+                closeEventModal();
+            }
+        }
+        
+        // Initialize the calendar when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add click event listeners to all cells
+            document.querySelectorAll('.calendar-cell').forEach(cell => {
+                cell.addEventListener('click', () => {
+                    const day = cell.dataset.day;
+                    const time = cell.dataset.time;
+                    const event = calendarData[day] && calendarData[day][time];
+                    showEventModal(day, time, event);
+                });
+            });
+            
+            // Set up modal event listeners
+            document.getElementById('eventForm').addEventListener('submit', saveEvent);
+            document.getElementById('cancelBtn').addEventListener('click', closeEventModal);
+            document.getElementById('deleteBtn').addEventListener('click', deleteEvent);
+            
+            // Add your example events
+            if (!calendarData['Tuesday']) calendarData['Tuesday'] = {};
+            calendarData['Tuesday']['15:30'] = {
+                id: 1,
+                name: 'Code review',
+                description: 'Code review is due!',
+                time: '15:30',
+                duration: '60'
+            };
+            
+            if (!calendarData['Thursday']) calendarData['Thursday'] = {};
+            calendarData['Thursday']['11:30'] = {
+                id: 2,
+                name: 'Debrief meeting',
+                description: 'Debrief meeting!',
+                time: '11:30',
+                duration: '60'
+            };
+        });
+    </script>
+</body>
+</html>
